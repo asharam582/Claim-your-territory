@@ -204,7 +204,8 @@ export default function SpotModal({
         <p className="warn-note">
           Payment is non-refundable. Your spot can be taken by anyone paying 1.5×
           at any time — you get nothing back when it is. This is entertainment, not
-          an investment.
+          an investment. By paying you agree to
+          our <a href="/terms" target="_blank" rel="noopener">Terms</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy&nbsp;Policy</a>.
         </p>
       </div>
     </div>
