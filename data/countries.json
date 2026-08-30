@@ -1,0 +1,882 @@
+[
+  {
+    "key": "004",
+    "name": "Afghanistan",
+    "basePrice": 300
+  },
+  {
+    "key": "008",
+    "name": "Albania",
+    "basePrice": 300
+  },
+  {
+    "key": "012",
+    "name": "Algeria",
+    "basePrice": 300
+  },
+  {
+    "key": "024",
+    "name": "Angola",
+    "basePrice": 300
+  },
+  {
+    "key": "032",
+    "name": "Argentina",
+    "basePrice": 300
+  },
+  {
+    "key": "051",
+    "name": "Armenia",
+    "basePrice": 300
+  },
+  {
+    "key": "036",
+    "name": "Australia",
+    "basePrice": 300
+  },
+  {
+    "key": "040",
+    "name": "Austria",
+    "basePrice": 300
+  },
+  {
+    "key": "031",
+    "name": "Azerbaijan",
+    "basePrice": 300
+  },
+  {
+    "key": "044",
+    "name": "Bahamas",
+    "basePrice": 300
+  },
+  {
+    "key": "050",
+    "name": "Bangladesh",
+    "basePrice": 300
+  },
+  {
+    "key": "112",
+    "name": "Belarus",
+    "basePrice": 300
+  },
+  {
+    "key": "056",
+    "name": "Belgium",
+    "basePrice": 300
+  },
+  {
+    "key": "084",
+    "name": "Belize",
+    "basePrice": 300
+  },
+  {
+    "key": "204",
+    "name": "Benin",
+    "basePrice": 300
+  },
+  {
+    "key": "064",
+    "name": "Bhutan",
+    "basePrice": 300
+  },
+  {
+    "key": "068",
+    "name": "Bolivia",
+    "basePrice": 300
+  },
+  {
+    "key": "070",
+    "name": "Bosnia and Herz.",
+    "basePrice": 300
+  },
+  {
+    "key": "072",
+    "name": "Botswana",
+    "basePrice": 300
+  },
+  {
+    "key": "076",
+    "name": "Brazil",
+    "basePrice": 300
+  },
+  {
+    "key": "096",
+    "name": "Brunei",
+    "basePrice": 300
+  },
+  {
+    "key": "100",
+    "name": "Bulgaria",
+    "basePrice": 300
+  },
+  {
+    "key": "854",
+    "name": "Burkina Faso",
+    "basePrice": 300
+  },
+  {
+    "key": "108",
+    "name": "Burundi",
+    "basePrice": 300
+  },
+  {
+    "key": "116",
+    "name": "Cambodia",
+    "basePrice": 300
+  },
+  {
+    "key": "120",
+    "name": "Cameroon",
+    "basePrice": 300
+  },
+  {
+    "key": "124",
+    "name": "Canada",
+    "basePrice": 300
+  },
+  {
+    "key": "140",
+    "name": "Central African Rep.",
+    "basePrice": 300
+  },
+  {
+    "key": "148",
+    "name": "Chad",
+    "basePrice": 300
+  },
+  {
+    "key": "152",
+    "name": "Chile",
+    "basePrice": 300
+  },
+  {
+    "key": "156",
+    "name": "China",
+    "basePrice": 300
+  },
+  {
+    "key": "170",
+    "name": "Colombia",
+    "basePrice": 300
+  },
+  {
+    "key": "178",
+    "name": "Congo",
+    "basePrice": 300
+  },
+  {
+    "key": "188",
+    "name": "Costa Rica",
+    "basePrice": 300
+  },
+  {
+    "key": "384",
+    "name": "Côte d'Ivoire",
+    "basePrice": 300
+  },
+  {
+    "key": "191",
+    "name": "Croatia",
+    "basePrice": 300
+  },
+  {
+    "key": "192",
+    "name": "Cuba",
+    "basePrice": 300
+  },
+  {
+    "key": "196",
+    "name": "Cyprus",
+    "basePrice": 300
+  },
+  {
+    "key": "203",
+    "name": "Czechia",
+    "basePrice": 300
+  },
+  {
+    "key": "180",
+    "name": "Dem. Rep. Congo",
+    "basePrice": 300
+  },
+  {
+    "key": "208",
+    "name": "Denmark",
+    "basePrice": 300
+  },
+  {
+    "key": "262",
+    "name": "Djibouti",
+    "basePrice": 300
+  },
+  {
+    "key": "214",
+    "name": "Dominican Rep.",
+    "basePrice": 300
+  },
+  {
+    "key": "218",
+    "name": "Ecuador",
+    "basePrice": 300
+  },
+  {
+    "key": "818",
+    "name": "Egypt",
+    "basePrice": 300
+  },
+  {
+    "key": "222",
+    "name": "El Salvador",
+    "basePrice": 300
+  },
+  {
+    "key": "226",
+    "name": "Eq. Guinea",
+    "basePrice": 300
+  },
+  {
+    "key": "232",
+    "name": "Eritrea",
+    "basePrice": 300
+  },
+  {
+    "key": "233",
+    "name": "Estonia",
+    "basePrice": 300
+  },
+  {
+    "key": "748",
+    "name": "eSwatini",
+    "basePrice": 300
+  },
+  {
+    "key": "231",
+    "name": "Ethiopia",
+    "basePrice": 300
+  },
+  {
+    "key": "238",
+    "name": "Falkland Is.",
+    "basePrice": 300
+  },
+  {
+    "key": "242",
+    "name": "Fiji",
+    "basePrice": 300
+  },
+  {
+    "key": "246",
+    "name": "Finland",
+    "basePrice": 300
+  },
+  {
+    "key": "260",
+    "name": "Fr. S. Antarctic Lands",
+    "basePrice": 300
+  },
+  {
+    "key": "250",
+    "name": "France",
+    "basePrice": 300
+  },
+  {
+    "key": "266",
+    "name": "Gabon",
+    "basePrice": 300
+  },
+  {
+    "key": "270",
+    "name": "Gambia",
+    "basePrice": 300
+  },
+  {
+    "key": "268",
+    "name": "Georgia",
+    "basePrice": 300
+  },
+  {
+    "key": "276",
+    "name": "Germany",
+    "basePrice": 300
+  },
+  {
+    "key": "288",
+    "name": "Ghana",
+    "basePrice": 300
+  },
+  {
+    "key": "300",
+    "name": "Greece",
+    "basePrice": 300
+  },
+  {
+    "key": "304",
+    "name": "Greenland",
+    "basePrice": 300
+  },
+  {
+    "key": "320",
+    "name": "Guatemala",
+    "basePrice": 300
+  },
+  {
+    "key": "324",
+    "name": "Guinea",
+    "basePrice": 300
+  },
+  {
+    "key": "624",
+    "name": "Guinea-Bissau",
+    "basePrice": 300
+  },
+  {
+    "key": "328",
+    "name": "Guyana",
+    "basePrice": 300
+  },
+  {
+    "key": "332",
+    "name": "Haiti",
+    "basePrice": 300
+  },
+  {
+    "key": "340",
+    "name": "Honduras",
+    "basePrice": 300
+  },
+  {
+    "key": "348",
+    "name": "Hungary",
+    "basePrice": 300
+  },
+  {
+    "key": "352",
+    "name": "Iceland",
+    "basePrice": 300
+  },
+  {
+    "key": "356",
+    "name": "India",
+    "basePrice": 300
+  },
+  {
+    "key": "360",
+    "name": "Indonesia",
+    "basePrice": 300
+  },
+  {
+    "key": "364",
+    "name": "Iran",
+    "basePrice": 300
+  },
+  {
+    "key": "368",
+    "name": "Iraq",
+    "basePrice": 300
+  },
+  {
+    "key": "372",
+    "name": "Ireland",
+    "basePrice": 300
+  },
+  {
+    "key": "376",
+    "name": "Israel",
+    "basePrice": 300
+  },
+  {
+    "key": "380",
+    "name": "Italy",
+    "basePrice": 300
+  },
+  {
+    "key": "388",
+    "name": "Jamaica",
+    "basePrice": 300
+  },
+  {
+    "key": "392",
+    "name": "Japan",
+    "basePrice": 300
+  },
+  {
+    "key": "400",
+    "name": "Jordan",
+    "basePrice": 300
+  },
+  {
+    "key": "398",
+    "name": "Kazakhstan",
+    "basePrice": 300
+  },
+  {
+    "key": "404",
+    "name": "Kenya",
+    "basePrice": 300
+  },
+  {
+    "key": "undefined",
+    "name": "Kosovo",
+    "basePrice": 300
+  },
+  {
+    "key": "414",
+    "name": "Kuwait",
+    "basePrice": 300
+  },
+  {
+    "key": "417",
+    "name": "Kyrgyzstan",
+    "basePrice": 300
+  },
+  {
+    "key": "418",
+    "name": "Laos",
+    "basePrice": 300
+  },
+  {
+    "key": "428",
+    "name": "Latvia",
+    "basePrice": 300
+  },
+  {
+    "key": "422",
+    "name": "Lebanon",
+    "basePrice": 300
+  },
+  {
+    "key": "426",
+    "name": "Lesotho",
+    "basePrice": 300
+  },
+  {
+    "key": "430",
+    "name": "Liberia",
+    "basePrice": 300
+  },
+  {
+    "key": "434",
+    "name": "Libya",
+    "basePrice": 300
+  },
+  {
+    "key": "440",
+    "name": "Lithuania",
+    "basePrice": 300
+  },
+  {
+    "key": "442",
+    "name": "Luxembourg",
+    "basePrice": 300
+  },
+  {
+    "key": "807",
+    "name": "Macedonia",
+    "basePrice": 300
+  },
+  {
+    "key": "450",
+    "name": "Madagascar",
+    "basePrice": 300
+  },
+  {
+    "key": "454",
+    "name": "Malawi",
+    "basePrice": 300
+  },
+  {
+    "key": "458",
+    "name": "Malaysia",
+    "basePrice": 300
+  },
+  {
+    "key": "466",
+    "name": "Mali",
+    "basePrice": 300
+  },
+  {
+    "key": "478",
+    "name": "Mauritania",
+    "basePrice": 300
+  },
+  {
+    "key": "484",
+    "name": "Mexico",
+    "basePrice": 300
+  },
+  {
+    "key": "498",
+    "name": "Moldova",
+    "basePrice": 300
+  },
+  {
+    "key": "496",
+    "name": "Mongolia",
+    "basePrice": 300
+  },
+  {
+    "key": "499",
+    "name": "Montenegro",
+    "basePrice": 300
+  },
+  {
+    "key": "504",
+    "name": "Morocco",
+    "basePrice": 300
+  },
+  {
+    "key": "508",
+    "name": "Mozambique",
+    "basePrice": 300
+  },
+  {
+    "key": "104",
+    "name": "Myanmar",
+    "basePrice": 300
+  },
+  {
+    "key": "undefined",
+    "name": "N. Cyprus",
+    "basePrice": 300
+  },
+  {
+    "key": "516",
+    "name": "Namibia",
+    "basePrice": 300
+  },
+  {
+    "key": "524",
+    "name": "Nepal",
+    "basePrice": 300
+  },
+  {
+    "key": "528",
+    "name": "Netherlands",
+    "basePrice": 300
+  },
+  {
+    "key": "540",
+    "name": "New Caledonia",
+    "basePrice": 300
+  },
+  {
+    "key": "554",
+    "name": "New Zealand",
+    "basePrice": 300
+  },
+  {
+    "key": "558",
+    "name": "Nicaragua",
+    "basePrice": 300
+  },
+  {
+    "key": "562",
+    "name": "Niger",
+    "basePrice": 300
+  },
+  {
+    "key": "566",
+    "name": "Nigeria",
+    "basePrice": 300
+  },
+  {
+    "key": "408",
+    "name": "North Korea",
+    "basePrice": 300
+  },
+  {
+    "key": "578",
+    "name": "Norway",
+    "basePrice": 300
+  },
+  {
+    "key": "512",
+    "name": "Oman",
+    "basePrice": 300
+  },
+  {
+    "key": "586",
+    "name": "Pakistan",
+    "basePrice": 300
+  },
+  {
+    "key": "275",
+    "name": "Palestine",
+    "basePrice": 300
+  },
+  {
+    "key": "591",
+    "name": "Panama",
+    "basePrice": 300
+  },
+  {
+    "key": "598",
+    "name": "Papua New Guinea",
+    "basePrice": 300
+  },
+  {
+    "key": "600",
+    "name": "Paraguay",
+    "basePrice": 300
+  },
+  {
+    "key": "604",
+    "name": "Peru",
+    "basePrice": 300
+  },
+  {
+    "key": "608",
+    "name": "Philippines",
+    "basePrice": 300
+  },
+  {
+    "key": "616",
+    "name": "Poland",
+    "basePrice": 300
+  },
+  {
+    "key": "620",
+    "name": "Portugal",
+    "basePrice": 300
+  },
+  {
+    "key": "630",
+    "name": "Puerto Rico",
+    "basePrice": 300
+  },
+  {
+    "key": "634",
+    "name": "Qatar",
+    "basePrice": 300
+  },
+  {
+    "key": "642",
+    "name": "Romania",
+    "basePrice": 300
+  },
+  {
+    "key": "643",
+    "name": "Russia",
+    "basePrice": 300
+  },
+  {
+    "key": "646",
+    "name": "Rwanda",
+    "basePrice": 300
+  },
+  {
+    "key": "728",
+    "name": "S. Sudan",
+    "basePrice": 300
+  },
+  {
+    "key": "682",
+    "name": "Saudi Arabia",
+    "basePrice": 300
+  },
+  {
+    "key": "686",
+    "name": "Senegal",
+    "basePrice": 300
+  },
+  {
+    "key": "688",
+    "name": "Serbia",
+    "basePrice": 300
+  },
+  {
+    "key": "694",
+    "name": "Sierra Leone",
+    "basePrice": 300
+  },
+  {
+    "key": "703",
+    "name": "Slovakia",
+    "basePrice": 300
+  },
+  {
+    "key": "705",
+    "name": "Slovenia",
+    "basePrice": 300
+  },
+  {
+    "key": "090",
+    "name": "Solomon Is.",
+    "basePrice": 300
+  },
+  {
+    "key": "706",
+    "name": "Somalia",
+    "basePrice": 300
+  },
+  {
+    "key": "undefined",
+    "name": "Somaliland",
+    "basePrice": 300
+  },
+  {
+    "key": "710",
+    "name": "South Africa",
+    "basePrice": 300
+  },
+  {
+    "key": "410",
+    "name": "South Korea",
+    "basePrice": 300
+  },
+  {
+    "key": "724",
+    "name": "Spain",
+    "basePrice": 300
+  },
+  {
+    "key": "144",
+    "name": "Sri Lanka",
+    "basePrice": 300
+  },
+  {
+    "key": "729",
+    "name": "Sudan",
+    "basePrice": 300
+  },
+  {
+    "key": "740",
+    "name": "Suriname",
+    "basePrice": 300
+  },
+  {
+    "key": "752",
+    "name": "Sweden",
+    "basePrice": 300
+  },
+  {
+    "key": "756",
+    "name": "Switzerland",
+    "basePrice": 300
+  },
+  {
+    "key": "760",
+    "name": "Syria",
+    "basePrice": 300
+  },
+  {
+    "key": "158",
+    "name": "Taiwan",
+    "basePrice": 300
+  },
+  {
+    "key": "762",
+    "name": "Tajikistan",
+    "basePrice": 300
+  },
+  {
+    "key": "834",
+    "name": "Tanzania",
+    "basePrice": 300
+  },
+  {
+    "key": "764",
+    "name": "Thailand",
+    "basePrice": 300
+  },
+  {
+    "key": "626",
+    "name": "Timor-Leste",
+    "basePrice": 300
+  },
+  {
+    "key": "768",
+    "name": "Togo",
+    "basePrice": 300
+  },
+  {
+    "key": "780",
+    "name": "Trinidad and Tobago",
+    "basePrice": 300
+  },
+  {
+    "key": "788",
+    "name": "Tunisia",
+    "basePrice": 300
+  },
+  {
+    "key": "792",
+    "name": "Turkey",
+    "basePrice": 300
+  },
+  {
+    "key": "795",
+    "name": "Turkmenistan",
+    "basePrice": 300
+  },
+  {
+    "key": "800",
+    "name": "Uganda",
+    "basePrice": 300
+  },
+  {
+    "key": "804",
+    "name": "Ukraine",
+    "basePrice": 300
+  },
+  {
+    "key": "784",
+    "name": "United Arab Emirates",
+    "basePrice": 300
+  },
+  {
+    "key": "826",
+    "name": "United Kingdom",
+    "basePrice": 300
+  },
+  {
+    "key": "840",
+    "name": "United States of America",
+    "basePrice": 2500
+  },
+  {
+    "key": "858",
+    "name": "Uruguay",
+    "basePrice": 300
+  },
+  {
+    "key": "860",
+    "name": "Uzbekistan",
+    "basePrice": 300
+  },
+  {
+    "key": "548",
+    "name": "Vanuatu",
+    "basePrice": 300
+  },
+  {
+    "key": "862",
+    "name": "Venezuela",
+    "basePrice": 300
+  },
+  {
+    "key": "704",
+    "name": "Vietnam",
+    "basePrice": 300
+  },
+  {
+    "key": "732",
+    "name": "W. Sahara",
+    "basePrice": 300
+  },
+  {
+    "key": "887",
+    "name": "Yemen",
+    "basePrice": 300
+  },
+  {
+    "key": "894",
+    "name": "Zambia",
+    "basePrice": 300
+  },
+  {
+    "key": "716",
+    "name": "Zimbabwe",
+    "basePrice": 300
+  }
+]
