@@ -161,8 +161,18 @@ export default function SpotModal({
           <label>Logo (optional)</label>
           <div className="uploader">
             {logoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img className="prev" src={logoUrl} alt="logo preview" />
+              <span className="prev-wrap">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="prev" src={logoUrl} alt="logo preview" />
+                <button
+                  type="button"
+                  className="discard-btn"
+                  aria-label="Remove logo"
+                  onClick={() => setLogoUrl(null)}
+                >
+                  ✕
+                </button>
+              </span>
             ) : (
               <span className="prev" />
             )}
@@ -194,7 +204,8 @@ export default function SpotModal({
         <p className="warn-note">
           Payment is non-refundable. Your spot can be taken by anyone paying 1.5×
           at any time — you get nothing back when it is. This is entertainment, not
-          an investment.
+          an investment. By paying you agree to
+          our <a href="/terms" target="_blank" rel="noopener">Terms</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy&nbsp;Policy</a>.
         </p>
       </div>
     </div>

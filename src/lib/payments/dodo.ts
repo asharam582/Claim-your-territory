@@ -31,7 +31,7 @@ export const dodoProvider: PaymentProvider = {
     // (in cents) sets what this buyer pays.
     const payment: any = await (client.payments.create as any)({
       payment_link: true,
-      customer: { email: args.customerEmail },
+      customer: { email: args.customerEmail, name: args.customerName || args.customerEmail },
       billing: { country },
       product_cart: [{ product_id: productId, quantity: 1, amount: args.amount }],
       metadata: { ledger_id: args.ledgerId },

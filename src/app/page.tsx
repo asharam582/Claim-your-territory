@@ -38,6 +38,11 @@ export default async function Home() {
           </Link>
         ))
       )}
+
+      <div className="home-footer">
+        <Link href="/terms">Terms of Service</Link>
+        <Link href="/privacy">Privacy Policy</Link>
+      </div>
     </main>
   );
 }
