@@ -161,8 +161,18 @@ export default function SpotModal({
           <label>Logo (optional)</label>
           <div className="uploader">
             {logoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img className="prev" src={logoUrl} alt="logo preview" />
+              <span className="prev-wrap">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="prev" src={logoUrl} alt="logo preview" />
+                <button
+                  type="button"
+                  className="discard-btn"
+                  aria-label="Remove logo"
+                  onClick={() => setLogoUrl(null)}
+                >
+                  ✕
+                </button>
+              </span>
             ) : (
               <span className="prev" />
             )}

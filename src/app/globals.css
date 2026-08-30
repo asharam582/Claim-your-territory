@@ -121,6 +121,9 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.01em; }
 .field input:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: var(--accent); }
 .uploader { display: flex; align-items: center; gap: 12px; }
 .uploader .prev { width: 46px; height: 46px; border-radius: 8px; background: var(--panel-2); border: 1px solid var(--border); object-fit: contain; }
+.uploader .prev-wrap { position: relative; display: inline-block; }
+.uploader .prev-wrap .prev { display: block; }
+.uploader .discard-btn { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; border: none; background: var(--risk, #e53e3e); color: #fff; font-size: 12px; line-height: 20px; text-align: center; padding: 0; cursor: pointer; }
 .price-line { display: flex; align-items: baseline; justify-content: space-between; margin: 6px 0 16px; }
 .price-line .big { font-size: 28px; font-weight: 800; color: var(--accent); }
 .price-line .note { color: var(--ink-faint); font-size: 12px; }

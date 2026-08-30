@@ -10,6 +10,7 @@ export interface CheckoutArgs {
   productName: string; // e.g. "The World Is For Sale — France"
   description: string; // e.g. "Conquer France from carillon.dev"
   customerEmail?: string; // required by Dodo; optional for Stripe
+  customerName?: string; // display name, used as Dodo customer name
   successUrl: string;
   cancelUrl: string;
 }

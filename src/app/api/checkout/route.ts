@@ -18,8 +18,13 @@ function sanitizeName(input: unknown): string | null {
 function sanitizeLink(input: unknown): string | null | undefined {
   if (input == null || input === "") return undefined;
   if (typeof input !== "string") return null;
+  // Allow bare domains like "example.com" — prepend https:// if no protocol.
+  let raw = input.trim();
+  if (raw && !/^https?:\/\//i.test(raw)) {
+    raw = `https://${raw}`;
+  }
   try {
-    const u = new URL(input);
+    const u = new URL(raw);
     if (u.protocol !== "http:" && u.protocol !== "https:") return null;
     return u.toString();
   } catch {
@@ -135,6 +140,7 @@ export async function POST(req: NextRequest) {
         ? `Conquer ${spot.label} from ${spot.owner_display}`
         : `Claim ${spot.label}`,
       customerEmail: email,
+      customerName: ownerDisplay ?? undefined,
       successUrl: `${site}/success?board=${board.slug}`,
       cancelUrl: `${site}/b/${board.slug}?canceled=1`,
     });
