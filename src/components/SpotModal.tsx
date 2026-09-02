@@ -139,7 +139,7 @@ export default function SpotModal({
         <div className="field">
           <label>Email (for your receipt)</label>
           <input
-            type="text"
+            type="email"
             inputMode="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -184,11 +184,12 @@ export default function SpotModal({
         {error && <div className="err">{error}</div>}
 
         <div className="rowbtns">
-          <button className="btn" onClick={onClose} disabled={submitting}>
+          <button className="btn" type="button" onClick={onClose} disabled={submitting}>
             Cancel
           </button>
           <button
             className="btn primary"
+            type="button"
             onClick={submit}
             disabled={submitting || uploading}
             style={{ flex: 1 }}
