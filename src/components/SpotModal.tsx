@@ -12,6 +12,21 @@ declare global {
   }
 }
 
+const COLOR_PALETTE = [
+  "#dff550", // lime (default owned)
+  "#ff7769", // red
+  "#50b4ff", // blue
+  "#f59e0b", // amber
+  "#a855f7", // purple
+  "#ec4899", // pink
+  "#14b8a6", // teal
+  "#ff6b35", // orange
+];
+
+function roundToWholeDollar(cents: number): number {
+  return Math.ceil(cents / 100) * 100;
+}
+
 export default function SpotModal({
   spot,
   board,
@@ -24,6 +39,8 @@ export default function SpotModal({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [link, setLink] = useState("");
+  const [warCry, setWarCry] = useState("");
+  const [color, setColor] = useState<string>(COLOR_PALETTE[0]);
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -32,7 +49,23 @@ export default function SpotModal({
   const tsRef = useRef<HTMLDivElement>(null);
 
   const kind = actionKind(spot);
-  const price = requiredPrice(spot, Number(board.multiplier));
+  const minPrice = requiredPrice(spot, Number(board.multiplier));
+
+  // Quick-bid amounts: min, 2×, 5× — all rounded to whole dollar.
+  const bidOptions = [
+    { label: "MIN", amount: minPrice },
+    { label: "2×", amount: roundToWholeDollar(minPrice * 2) },
+    { label: "5×", amount: roundToWholeDollar(minPrice * 5) },
+  ];
+  const [bidAmount, setBidAmount] = useState<number>(minPrice);
+  const [customBid, setCustomBid] = useState<string>("");
+  const [useCustomBid, setUseCustomBid] = useState(false);
+
+  const effectiveBid = useCustomBid
+    ? Math.round(parseFloat(customBid || "0") * 100)
+    : bidAmount;
+  const bidTooLow = effectiveBid < minPrice;
+
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
   useEffect(() => {
@@ -82,6 +115,10 @@ export default function SpotModal({
       setError("Enter a display name.");
       return;
     }
+    if (bidTooLow) {
+      setError(`Minimum bid is ${formatMoney(minPrice, board.currency)}.`);
+      return;
+    }
     setSubmitting(true);
     try {
       const res = await fetch("/api/checkout", {
@@ -93,6 +130,9 @@ export default function SpotModal({
           email: email || undefined,
           linkUrl: link || undefined,
           logoUrl: logoUrl || undefined,
+          warCry: warCry || undefined,
+          color: color || undefined,
+          bidAmount: effectiveBid !== minPrice ? effectiveBid : undefined,
           turnstileToken: tokenRef.current || undefined,
         }),
       });
@@ -105,11 +145,13 @@ export default function SpotModal({
     }
   }
 
+  const nextTakerPrice = roundToWholeDollar(effectiveBid * Number(board.multiplier));
+
   return (
     <div className="overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h2>
-          {kind === "conquer" ? "Conquer" : "Claim"} {spot.label}
+          {kind === "conquer" ? "⚔ Conquer" : "🏴 Claim"} {spot.label}
         </h2>
         <p className="muted">
           {spot.owner_display
@@ -118,15 +160,53 @@ export default function SpotModal({
         </p>
 
         <div className="price-line">
-          <span className="big tnum">{formatMoney(price, board.currency)}</span>
+          <span className="big tnum">{formatMoney(effectiveBid, board.currency)}</span>
           <span className="note">
-            next taker pays{" "}
-            {formatMoney(Math.ceil((price * Number(board.multiplier)) / 100) * 100, board.currency)}
+            next taker pays {formatMoney(nextTakerPrice, board.currency)}
           </span>
         </div>
 
+        {/* Quick-bid buttons */}
+        <div className="bid-row">
+          {bidOptions.map((opt) => (
+            <button
+              key={opt.label}
+              type="button"
+              className={`bid-btn${!useCustomBid && bidAmount === opt.amount ? " active" : ""}`}
+              onClick={() => {
+                setBidAmount(opt.amount);
+                setUseCustomBid(false);
+              }}
+            >
+              {opt.label}
+              <small>{formatMoney(opt.amount, board.currency)}</small>
+            </button>
+          ))}
+          <div className="bid-custom">
+            <span className="bid-dollar">$</span>
+            <input
+              type="number"
+              min={minPrice / 100}
+              step="1"
+              placeholder="Custom"
+              value={customBid}
+              onChange={(e) => {
+                setCustomBid(e.target.value);
+                setUseCustomBid(true);
+              }}
+              onFocus={() => setUseCustomBid(true)}
+              className={useCustomBid ? "active" : ""}
+            />
+          </div>
+        </div>
+        {bidTooLow && (
+          <div className="err" style={{ marginTop: 4 }}>
+            Below minimum ({formatMoney(minPrice, board.currency)})
+          </div>
+        )}
+
         <div className="field">
-          <label>Display name</label>
+          <label>Empire name</label>
           <input
             type="text"
             maxLength={40}
@@ -155,6 +235,33 @@ export default function SpotModal({
             onChange={(e) => setLink(e.target.value)}
             placeholder="https://yoursite.com"
           />
+        </div>
+
+        <div className="field">
+          <label>War cry (optional)</label>
+          <input
+            type="text"
+            maxLength={80}
+            value={warCry}
+            onChange={(e) => setWarCry(e.target.value)}
+            placeholder="We came, we saw, we conquered"
+          />
+        </div>
+
+        <div className="field">
+          <label>Territory color</label>
+          <div className="color-row">
+            {COLOR_PALETTE.map((c) => (
+              <button
+                key={c}
+                type="button"
+                className={`color-swatch${color === c ? " active" : ""}`}
+                style={{ background: c }}
+                onClick={() => setColor(c)}
+                aria-label={c}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="field">
@@ -191,14 +298,14 @@ export default function SpotModal({
             className="btn primary"
             type="button"
             onClick={submit}
-            disabled={submitting || uploading}
+            disabled={submitting || uploading || bidTooLow}
             style={{ flex: 1 }}
           >
             {submitting
               ? "Redirecting…"
               : uploading
                 ? "Uploading…"
-                : `Pay ${formatMoney(price, board.currency)} to ${kind}`}
+                : `${kind === "conquer" ? "INVADE" : "CLAIM"} FOR ${formatMoney(effectiveBid, board.currency)}`}
           </button>
         </div>
 

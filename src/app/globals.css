@@ -554,6 +554,92 @@ h3 {
   font-size: 11px;
   text-align: right;
 }
+/* Quick-bid buttons */
+.bid-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.bid-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.bid-btn small {
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+.bid-btn.active,
+.bid-btn:hover {
+  border-color: var(--accent);
+  background: var(--panel-2);
+}
+.bid-btn.active small {
+  color: var(--accent);
+}
+.bid-custom {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.bid-dollar {
+  position: absolute;
+  left: 10px;
+  color: var(--ink-faint);
+  font-size: 13px;
+  pointer-events: none;
+}
+.bid-custom input {
+  width: 100%;
+  padding: 8px 8px 8px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 13px;
+}
+.bid-custom input:focus,
+.bid-custom input.active {
+  border-color: var(--accent);
+  outline: none;
+}
+/* Color swatch picker */
+.color-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.color-swatch {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.color-swatch:hover {
+  transform: scale(1.15);
+}
+.color-swatch.active {
+  border-color: white;
+  box-shadow: 0 0 0 2px var(--accent);
+}
 .err {
   margin-bottom: 10px;
   color: var(--risk);
