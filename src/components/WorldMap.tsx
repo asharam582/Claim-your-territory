@@ -13,10 +13,10 @@ interface Props {
   onPick: (spotId: string) => void;
 }
 
-const LAND = "#263241";
-const LAND_HOVER = "#33445a";
-const OWNED = "#d8a64a";
-const OWNED_HOVER = "#e6bd6b";
+const LAND = "#19342c";
+const LAND_HOVER = "#305444";
+const OWNED = "#dff550";
+const OWNED_HOVER = "#f0ff91";
 
 export default function WorldMap({ board, spots, geographyUrl, onPick }: Props) {
   const byKey: Record<string, Spot> = {};
@@ -49,8 +49,8 @@ export default function WorldMap({ board, spots, geographyUrl, onPick }: Props) 
                       }
                       onMouseLeave={() => setHover(null)}
                       style={{
-                        default: { fill: owned ? OWNED : LAND, stroke: "#0b0e13", strokeWidth: 0.4 },
-                        hover: { fill: owned ? OWNED_HOVER : LAND_HOVER, stroke: "#0b0e13", strokeWidth: 0.4 },
+                        default: { fill: owned ? OWNED : LAND, stroke: "#07110f", strokeWidth: 0.4 },
+                        hover: { fill: owned ? OWNED_HOVER : LAND_HOVER, stroke: "#07110f", strokeWidth: 0.4 },
                         pressed: { fill: OWNED_HOVER },
                       }}
                     />

@@ -37,7 +37,7 @@ export default function ListBoard({ spotList, board, onPick }: Props) {
           <span className="price tnum">
             {formatMoney(requiredPrice(s, Number(board.multiplier)), board.currency)}
           </span>
-          <button className="btn primary" onClick={() => onPick(s.id)}>
+          <button className="btn primary" type="button" onClick={() => onPick(s.id)}>
             {s.owner_display ? "Conquer" : "Claim"}
           </button>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { browserClient } from "@/lib/supabase/browser";
 import { formatMoney } from "@/lib/pricing";
 import type { Board, Spot, FeedItem, BoardStats } from "@/lib/types";
@@ -82,10 +83,10 @@ export default function BoardView({ board, initialSpots, initialFeed, initialSta
   return (
     <>
       <div className="topbar">
-        <span className="brand">
-          THE WORLD IS <b>FOR SALE</b>
-        </span>
-        <span className="sub">{board.name}</span>
+        <Link className="brand" href="/">
+          CLAIM <b>YOUR</b> TERRITORY
+        </Link>
+        <span className="sub board-name">/ {board.name}</span>
         <span className="spacer" />
         <span className="stat online">
           <span className="v">
@@ -108,6 +109,11 @@ export default function BoardView({ board, initialSpots, initialFeed, initialSta
 
       <div className="stage">
         <aside className="side">
+          <div className="mission-card">
+            <span className="eyebrow">Your next move</span>
+            <p>Choose a territory. Claim it before someone else does.</p>
+            <span className="mission-rule">Takeover price: <b>{Number(board.multiplier)}×</b></span>
+          </div>
           <div className="panel">
             <h3>War Report</h3>
             <ActivityFeed feed={feed} currency={board.currency} />
@@ -119,6 +125,11 @@ export default function BoardView({ board, initialSpots, initialFeed, initialSta
         </aside>
 
         <section className="canvas">
+          <div className="canvas-heading">
+            <span className="eyebrow">Live territory</span>
+            <p>{board.kind === "map" ? "Drag to explore · Select a country to make your move" : "Every rank is open to challenge"}</p>
+          </div>
+          <div className="canvas-coordinates" aria-hidden="true">01° 20′ N &nbsp;·&nbsp; 10° 00′ E</div>
           {board.kind === "map" ? (
             <WorldMap
               board={board}

@@ -87,8 +87,8 @@ See `.env.example` for every variable. The essentials:
 
 | Variable | Where it comes from |
 | --- | --- |
-| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase → Project Settings → API |
-| `SUPABASE_SERVICE_ROLE_KEY` | same page — **server secret, never expose** |
+| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase → Project Settings → API Keys |
+| `SUPABASE_SECRET_KEY` | same page — **server secret, never expose** |
 | `STRIPE_SECRET_KEY` / `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe → Developers → API keys |
 | `STRIPE_WEBHOOK_SECRET` | from `stripe listen` (local) or the dashboard webhook (prod) |
 | `OPENAI_API_KEY` | optional but recommended — enables logo moderation |
@@ -131,7 +131,7 @@ Visit **`/b/world`** (map) or **`/b/top`** (leaderboard).
    `checkout.session.completed` and `checkout.session.expired`, and copy the
    signing secret into `STRIPE_WEBHOOK_SECRET`.
 4. Run the SQL migration and `npm run seed` against your production Supabase
-   project (the seed reads `NEXT_PUBLIC_SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`).
+project (the seed reads `NEXT_PUBLIC_SUPABASE_URL` + `SUPABASE_SECRET_KEY`).
 5. Turn on **Stripe Tax** if you want VAT/sales tax handled for you.
 
 ---
