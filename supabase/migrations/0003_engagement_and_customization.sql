@@ -21,7 +21,7 @@ alter table public.spots
   add column if not exists war_cry      text,
   add column if not exists click_count  integer not null default 0;
 
-do $$
+do $spots_chk$
 begin
   if not exists (
     select 1 from pg_constraint where conname = 'spots_color_hex_chk'
@@ -37,7 +37,7 @@ begin
       add constraint spots_war_cry_len_chk
       check (war_cry is null or char_length(war_cry) <= 80);
   end if;
-end $$;
+end $spots_chk$;
 
 -- ---------------------------------------------------------------------------
 -- ledger: carry the submitted customization + originating anonymous session
@@ -48,7 +48,7 @@ alter table public.ledger
   add column if not exists color      text,
   add column if not exists war_cry    text;
 
-do $$
+do $ledger_chk$
 begin
   if not exists (
     select 1 from pg_constraint where conname = 'ledger_color_hex_chk'
@@ -64,7 +64,7 @@ begin
       add constraint ledger_war_cry_len_chk
       check (war_cry is null or char_length(war_cry) <= 80);
   end if;
-end $$;
+end $ledger_chk$;
 
 -- ---------------------------------------------------------------------------
 -- activity_feed: carry session_id through so the client can filter "Mine"
@@ -116,7 +116,7 @@ returns text
 language plpgsql
 security definer
 set search_path = public
-as $$
+as $fn$
 declare
   led   public.ledger%rowtype;
   sp    public.spots%rowtype;
@@ -176,7 +176,7 @@ begin
     return 'lost';
   end if;
 end;
-$$;
+$fn$;
 
 -- ===========================================================================
 -- record_visit / record_click — cosmetic-counter RPCs. Same trust boundary
@@ -188,7 +188,7 @@ returns integer
 language plpgsql
 security definer
 set search_path = public
-as $$
+as $rv$
 declare
   new_count integer;
   inserted  boolean;
@@ -207,14 +207,14 @@ begin
   end if;
   return coalesce(new_count, 0);
 end;
-$$;
+$rv$;
 
 create or replace function public.record_click(p_spot_id uuid, p_session_id text)
 returns integer
 language plpgsql
 security definer
 set search_path = public
-as $$
+as $rc$
 declare
   v_board_id uuid;
   new_count  integer;
@@ -228,7 +228,7 @@ begin
   end if;
   return coalesce(new_count, 0);
 end;
-$$;
+$rc$;
 
 revoke execute on function public.record_visit(uuid, text) from public, anon, authenticated;
 grant  execute on function public.record_visit(uuid, text) to service_role;
@@ -253,7 +253,7 @@ create policy "owner_totals public read" on public.owner_totals for select using
 -- ride the existing spots UPDATE stream for free. activity_feed is already
 -- published too, so session_id rides along for free as well.
 -- ===========================================================================
-do $$
+do $pub$
 begin
   if not exists (
     select 1 from pg_publication_tables
@@ -261,4 +261,4 @@ begin
   ) then
     alter publication supabase_realtime add table public.boards;
   end if;
-end $$;
+end $pub$;
