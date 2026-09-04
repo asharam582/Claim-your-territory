@@ -282,6 +282,30 @@ h3 {
   color: var(--accent);
   background: #07110f;
 }
+.sort-bar {
+  display: flex;
+  gap: 4px;
+  padding: 6px 14px 8px;
+}
+.sort-btn {
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--ink-faint);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.sort-btn.active,
+.sort-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
 .power {
   grid-template-columns: 20px 1fr auto;
 }

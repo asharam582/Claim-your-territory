@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { serviceClient } from "@/lib/supabase/server";
 import BoardView from "@/components/BoardView";
-import type { Board, Spot, FeedItem, BoardStats } from "@/lib/types";
+import type { Board, Spot, FeedItem, BoardStats, OwnerTotal } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -15,16 +15,21 @@ export default async function BoardPage({ params }: { params: { slug: string } }
     .maybeSingle<Board>();
   if (!board) notFound();
 
-  const [{ data: spots }, { data: feed }, { data: stats }] = await Promise.all([
-    db.from("spots").select("*").eq("board_id", board.id).order("position", { nullsFirst: false }),
-    db
-      .from("activity_feed")
-      .select("*")
-      .eq("board_id", board.id)
-      .order("created_at", { ascending: false })
-      .limit(40),
-    db.rpc("board_stats", { p_board_id: board.id }),
-  ]);
+  const [{ data: spots }, { data: feed }, { data: stats }, { data: ownerTotals }] =
+    await Promise.all([
+      db.from("spots").select("*").eq("board_id", board.id).order("position", { nullsFirst: false }),
+      db
+        .from("activity_feed")
+        .select("*")
+        .eq("board_id", board.id)
+        .order("created_at", { ascending: false })
+        .limit(100),
+      db.rpc("board_stats", { p_board_id: board.id }),
+      db
+        .from("owner_totals")
+        .select("owner_display, lifetime_plunder")
+        .eq("board_id", board.id),
+    ]);
 
   const statsRow: BoardStats = Array.isArray(stats)
     ? (stats[0] as BoardStats)
@@ -40,6 +45,7 @@ export default async function BoardPage({ params }: { params: { slug: string } }
       initialSpots={(spots as Spot[]) ?? []}
       initialFeed={(feed as FeedItem[]) ?? []}
       initialStats={statsRow}
+      initialOwnerTotals={(ownerTotals as OwnerTotal[]) ?? []}
     />
   );
 }
