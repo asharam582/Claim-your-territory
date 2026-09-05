@@ -8,6 +8,8 @@ export interface Board {
   multiplier: number;
   currency: string;
   config: Record<string, unknown>;
+  visitor_count: number;
+  click_count: number;
 }
 
 export interface Spot {
@@ -20,6 +22,9 @@ export interface Spot {
   owner_display: string | null;
   logo_url: string | null;
   link_url: string | null;
+  color: string | null;
+  war_cry: string | null;
+  click_count: number;
   version: number;
   position: number | null;
   times_taken: number;
@@ -35,6 +40,7 @@ export interface FeedItem {
   from_owner: string | null;
   label: string;
   amount: number;
+  session_id: string | null;
   created_at: string;
 }
 
@@ -42,4 +48,9 @@ export interface BoardStats {
   claimed_count: number;
   total_spots: number;
   total_plundered: number;
+}
+
+export interface OwnerTotal {
+  owner_display: string;
+  lifetime_plunder: number;
 }

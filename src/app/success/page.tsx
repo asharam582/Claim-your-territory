@@ -1,11 +1,12 @@
 import Link from "next/link";
 
-export default function Success({
+export default async function Success({
   searchParams,
 }: {
-  searchParams: { board?: string };
+  searchParams: Promise<{ board?: string }>;
 }) {
-  const board = searchParams.board || "world";
+  const { board: boardSlug } = await searchParams;
+  const board = boardSlug || "world";
   return (
     <main className="home" style={{ textAlign: "center" }}>
       <h1>Payment received.</h1>
