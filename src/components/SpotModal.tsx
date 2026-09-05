@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { requiredPrice, actionKind, formatMoney } from "@/lib/pricing";
+import { tierForKey } from "@/lib/tiers";
+import TierBadge from "./TierBadge";
+import RulerCard from "./RulerCard";
 import type { Board, Spot } from "@/lib/types";
 
 declare global {
@@ -152,12 +155,18 @@ export default function SpotModal({
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h2>
           {kind === "conquer" ? "⚔ Conquer" : "🏴 Claim"} {spot.label}
+          {board.kind === "map" && (
+            <TierBadge tier={tierForKey(spot.key)} />
+          )}
         </h2>
-        <p className="muted">
-          {spot.owner_display
-            ? `Currently held by ${spot.owner_display}. Take it — they get nothing back.`
-            : "Unclaimed. Plant your flag."}
-        </p>
+
+        {spot.owner_display && (
+          <RulerCard spot={spot} currency={board.currency} />
+        )}
+
+        {!spot.owner_display && (
+          <p className="muted">Unclaimed. Plant your flag.</p>
+        )}
 
         <div className="price-line">
           <span className="big tnum">{formatMoney(effectiveBid, board.currency)}</span>

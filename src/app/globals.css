@@ -468,6 +468,74 @@ h3 {
   font-size: 12px;
   font-weight: 700;
 }
+/* Tier badge */
+.tier-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 7px;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+}
+/* Ruler card (current owner) */
+.ruler-card {
+  margin: 10px 0 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+.ruler-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.ruler-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--panel-2);
+}
+.ruler-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+.ruler-cry {
+  color: var(--ink-faint);
+  font-size: 12px;
+  font-style: italic;
+}
+.ruler-stats {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.ruler-stat {
+  display: flex;
+  flex-direction: column;
+}
+.ruler-stat-v {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.ruler-stat-k {
+  font-size: 10px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.ruler-visit {
+  margin-left: auto;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 700;
+}
 /* Modal */
 .overlay {
   position: fixed;

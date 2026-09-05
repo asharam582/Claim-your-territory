@@ -15,8 +15,23 @@ interface Props {
 
 const LAND = "#19342c";
 const LAND_HOVER = "#305444";
-const OWNED = "#dff550";
-const OWNED_HOVER = "#f0ff91";
+const DEFAULT_OWNED = "#dff550";
+const DEFAULT_OWNED_HOVER = "#f0ff91";
+
+/** Lighten a hex color by ~25% for hover state. */
+function lightenHex(hex: string): string {
+  try {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    const lr = Math.min(255, r + Math.round((255 - r) * 0.25));
+    const lg = Math.min(255, g + Math.round((255 - g) * 0.25));
+    const lb = Math.min(255, b + Math.round((255 - b) * 0.25));
+    return `#${lr.toString(16).padStart(2, "0")}${lg.toString(16).padStart(2, "0")}${lb.toString(16).padStart(2, "0")}`;
+  } catch {
+    return DEFAULT_OWNED_HOVER;
+  }
+}
 
 export default function WorldMap({ board, spots, geographyUrl, onPick }: Props) {
   const byKey: Record<string, Spot> = {};
@@ -37,6 +52,8 @@ export default function WorldMap({ board, spots, geographyUrl, onPick }: Props) 
               geographies.map((geo) => {
                 const spot = byKey[String(geo.id)];
                 const owned = !!spot?.owner_display;
+                const fill = owned ? (spot.color || DEFAULT_OWNED) : LAND;
+                const fillHover = owned ? lightenHex(spot.color || DEFAULT_OWNED) : LAND_HOVER;
                 const centroid = spot?.logo_url ? geoCentroid(geo) : null;
                 return (
                   <g key={geo.rsmKey}>
@@ -49,9 +66,9 @@ export default function WorldMap({ board, spots, geographyUrl, onPick }: Props) 
                       }
                       onMouseLeave={() => setHover(null)}
                       style={{
-                        default: { fill: owned ? OWNED : LAND, stroke: "#07110f", strokeWidth: 0.4 },
-                        hover: { fill: owned ? OWNED_HOVER : LAND_HOVER, stroke: "#07110f", strokeWidth: 0.4 },
-                        pressed: { fill: OWNED_HOVER },
+                        default: { fill, stroke: "#07110f", strokeWidth: 0.4 },
+                        hover: { fill: fillHover, stroke: "#07110f", strokeWidth: 0.4 },
+                        pressed: { fill: fillHover },
                       }}
                     />
                     {centroid && spot?.logo_url && (
