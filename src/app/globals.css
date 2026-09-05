@@ -1301,3 +1301,42 @@ h3 {
 .canvas {
   position: relative;
 }
+
+/* ─── Phase 6: Filter bar, sticky headers ────────────────────────── */
+
+.filter-bar {
+  display: flex;
+  gap: 2px;
+  padding: 6px 10px;
+  border-bottom: 1px solid #1a2e26;
+}
+.filter-btn {
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #6f8d7e;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.filter-btn:hover {
+  color: #eff4e9;
+}
+.filter-btn.active {
+  background: #1d3a30;
+  color: #dff550;
+}
+
+/* Sticky panel headings — stick within the scrolling sidebar */
+.panel > h3 {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--bg, #0a0f0a);
+  margin: 0;
+  padding: 10px 14px 8px;
+}
