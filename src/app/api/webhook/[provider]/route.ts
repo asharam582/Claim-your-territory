@@ -9,8 +9,9 @@ export const dynamic = "force-dynamic";
 // One endpoint per provider:
 //   Stripe -> /api/webhook/stripe
 //   Dodo   -> /api/webhook/dodo
-export async function POST(req: NextRequest, { params }: { params: { provider: string } }) {
-  const provider = providerById(params.provider);
+export async function POST(req: NextRequest, { params }: { params: Promise<{ provider: string }> }) {
+  const { provider: providerId } = await params;
+  const provider = providerById(providerId);
   if (!provider) {
     return NextResponse.json({ error: "Unknown provider." }, { status: 404 });
   }

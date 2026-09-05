@@ -5,13 +5,14 @@ import type { Board, Spot, FeedItem, BoardStats, OwnerTotal } from "@/lib/types"
 
 export const dynamic = "force-dynamic";
 
-export default async function BoardPage({ params }: { params: { slug: string } }) {
+export default async function BoardPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const db = serviceClient();
 
   const { data: board } = await db
     .from("boards")
     .select("*")
-    .eq("slug", params.slug)
+    .eq("slug", slug)
     .maybeSingle<Board>();
   if (!board) notFound();
 
