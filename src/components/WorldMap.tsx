@@ -22,7 +22,6 @@ interface Props {
 const LAND = "#19342c";
 const LAND_HOVER = "#305444";
 const DEFAULT_OWNED = "#dff550";
-const DEFAULT_OWNED_HOVER = "#f0ff91";
 
 function lightenHex(hex: string): string {
   try {
@@ -34,7 +33,7 @@ function lightenHex(hex: string): string {
     const lb = Math.min(255, b + Math.round((255 - b) * 0.25));
     return `#${lr.toString(16).padStart(2, "0")}${lg.toString(16).padStart(2, "0")}${lb.toString(16).padStart(2, "0")}`;
   } catch {
-    return DEFAULT_OWNED_HOVER;
+    return "#f0ff91";
   }
 }
 
@@ -53,21 +52,24 @@ export default function WorldMap({
   for (const s of Object.values(spots)) byKey[s.key] = s;
 
   const [hover, setHover] = useState<{ x: number; y: number; spot: Spot } | null>(null);
+  const [hoveredGeoKey, setHoveredGeoKey] = useState<string | null>(null);
 
   const zoom = flatZoom(zoomT);
 
+  // react-simple-maps v5: coordinates and zoom are optional in the callback.
   const handleMoveEnd = useCallback(
-    (pos: { coordinates: [number, number]; zoom: number }) => {
-      onCenterChange(pos.coordinates);
-      // Convert back from flat zoom scale to normalized zoomT.
-      const t = (pos.zoom - 0.8) / (8 - 0.8);
-      onZoomChange(Math.max(0, Math.min(1, t)));
+    (pos: { coordinates?: [number, number]; zoom?: number }) => {
+      if (pos.coordinates) onCenterChange(pos.coordinates);
+      if (pos.zoom != null) {
+        const t = (pos.zoom - 0.8) / (8 - 0.8);
+        onZoomChange(Math.max(0, Math.min(1, t)));
+      }
     },
     [onCenterChange, onZoomChange],
   );
 
   return (
-    <div className="map-wrap" onMouseLeave={() => setHover(null)}>
+    <div className="map-wrap" onMouseLeave={() => { setHover(null); setHoveredGeoKey(null); }}>
       <ComposableMap
         projection="geoEqualEarth"
         projectionConfig={{ scale: 165 }}
@@ -83,17 +85,21 @@ export default function WorldMap({
           <Geographies geography={geographyUrl}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                const spot = byKey[String(geo.id)];
+                const geoKey = String(geo.id);
+                const spot = byKey[geoKey];
                 const owned = !!spot?.owner_display;
                 const isFlash = spot && spot.key === flashKey;
-                const fill = isFlash
+                const isHovered = geoKey === hoveredGeoKey;
+
+                const baseFill = isFlash
                   ? "#ffffff"
                   : owned
                     ? (spot.color || DEFAULT_OWNED)
                     : LAND;
-                const fillHover = owned
-                  ? lightenHex(spot.color || DEFAULT_OWNED)
-                  : LAND_HOVER;
+                const fill = isHovered && !isFlash
+                  ? (owned ? lightenHex(spot.color || DEFAULT_OWNED) : LAND_HOVER)
+                  : baseFill;
+
                 const centroid = spot?.logo_url ? geoCentroid(geo) : null;
                 return (
                   <g key={geo.rsmKey}>
@@ -101,15 +107,12 @@ export default function WorldMap({
                       className="geo"
                       geography={geo}
                       onClick={() => spot && onPick(spot.id)}
+                      onMouseEnter={() => setHoveredGeoKey(geoKey)}
                       onMouseMove={(e) =>
                         spot && setHover({ x: e.clientX, y: e.clientY, spot })
                       }
-                      onMouseLeave={() => setHover(null)}
-                      style={{
-                        default: { fill, stroke: "#07110f", strokeWidth: 0.4 },
-                        hover: { fill: fillHover, stroke: "#07110f", strokeWidth: 0.4 },
-                        pressed: { fill: fillHover },
-                      }}
+                      onMouseLeave={() => { setHover(null); setHoveredGeoKey(null); }}
+                      style={{ fill, stroke: "#07110f", strokeWidth: 0.4, cursor: spot ? "pointer" : "default" }}
                     />
                     {centroid && spot?.logo_url && (
                       <Marker coordinates={centroid as [number, number]}>
