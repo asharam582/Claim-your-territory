@@ -1,16 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps";
 import { geoCentroid } from "d3-geo";
 import { requiredPrice, formatMoney } from "@/lib/pricing";
+import { flatZoom } from "@/lib/viewport";
 import type { Board, Spot } from "@/lib/types";
 
 interface Props {
   board: Board;
   spots: Record<string, Spot>;
   geographyUrl: string;
+  zoomT: number;
+  center: [number, number];
+  flashKey: string | null;
   onPick: (spotId: string) => void;
+  onZoomChange: (zoomT: number) => void;
+  onCenterChange: (center: [number, number]) => void;
 }
 
 const LAND = "#19342c";
@@ -18,7 +24,6 @@ const LAND_HOVER = "#305444";
 const DEFAULT_OWNED = "#dff550";
 const DEFAULT_OWNED_HOVER = "#f0ff91";
 
-/** Lighten a hex color by ~25% for hover state. */
 function lightenHex(hex: string): string {
   try {
     const r = parseInt(hex.slice(1, 3), 16);
@@ -33,11 +38,33 @@ function lightenHex(hex: string): string {
   }
 }
 
-export default function WorldMap({ board, spots, geographyUrl, onPick }: Props) {
+export default function WorldMap({
+  board,
+  spots,
+  geographyUrl,
+  zoomT,
+  center,
+  flashKey,
+  onPick,
+  onZoomChange,
+  onCenterChange,
+}: Props) {
   const byKey: Record<string, Spot> = {};
   for (const s of Object.values(spots)) byKey[s.key] = s;
 
   const [hover, setHover] = useState<{ x: number; y: number; spot: Spot } | null>(null);
+
+  const zoom = flatZoom(zoomT);
+
+  const handleMoveEnd = useCallback(
+    (pos: { coordinates: [number, number]; zoom: number }) => {
+      onCenterChange(pos.coordinates);
+      // Convert back from flat zoom scale to normalized zoomT.
+      const t = (pos.zoom - 0.8) / (8 - 0.8);
+      onZoomChange(Math.max(0, Math.min(1, t)));
+    },
+    [onCenterChange, onZoomChange],
+  );
 
   return (
     <div className="map-wrap" onMouseLeave={() => setHover(null)}>
@@ -46,14 +73,27 @@ export default function WorldMap({ board, spots, geographyUrl, onPick }: Props) 
         projectionConfig={{ scale: 165 }}
         style={{ width: "100%", height: "100%" }}
       >
-        <ZoomableGroup center={[10, 20]} zoom={1} maxZoom={8} minZoom={0.8}>
+        <ZoomableGroup
+          center={center}
+          zoom={zoom}
+          maxZoom={8}
+          minZoom={0.8}
+          onMoveEnd={handleMoveEnd}
+        >
           <Geographies geography={geographyUrl}>
             {({ geographies }) =>
               geographies.map((geo) => {
                 const spot = byKey[String(geo.id)];
                 const owned = !!spot?.owner_display;
-                const fill = owned ? (spot.color || DEFAULT_OWNED) : LAND;
-                const fillHover = owned ? lightenHex(spot.color || DEFAULT_OWNED) : LAND_HOVER;
+                const isFlash = spot && spot.key === flashKey;
+                const fill = isFlash
+                  ? "#ffffff"
+                  : owned
+                    ? (spot.color || DEFAULT_OWNED)
+                    : LAND;
+                const fillHover = owned
+                  ? lightenHex(spot.color || DEFAULT_OWNED)
+                  : LAND_HOVER;
                 const centroid = spot?.logo_url ? geoCentroid(geo) : null;
                 return (
                   <g key={geo.rsmKey}>

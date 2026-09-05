@@ -1219,3 +1219,85 @@ h3 {
     font-size: 18px;
   }
 }
+
+/* ─── Phase 5: View toggle, Zoom controls, Globe wrap ───────────── */
+
+.view-toggle {
+  display: flex;
+  gap: 2px;
+  margin-right: 12px;
+  background: #10221d;
+  border-radius: 8px;
+  padding: 2px;
+  border: 1px solid #27463c;
+}
+.vt-btn {
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #6f8d7e;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.vt-btn:hover {
+  color: #eff4e9;
+}
+.vt-btn.active {
+  background: #dff550;
+  color: #07110f;
+}
+
+.zoom-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 10;
+}
+.zoom-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #27463c;
+  border-radius: 8px;
+  background: #10221dee;
+  color: #eff4e9;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  backdrop-filter: blur(4px);
+}
+.zoom-btn:hover {
+  background: #1d3a30;
+}
+.zoom-reset {
+  font-size: 14px;
+}
+
+.globe-wrap {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0f0a;
+}
+
+/* Make canvas region position:relative for zoom-controls absolute positioning */
+.canvas {
+  position: relative;
+}

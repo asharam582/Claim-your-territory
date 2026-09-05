@@ -4,13 +4,18 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { browserClient } from "@/lib/supabase/browser";
 import { formatMoney } from "@/lib/pricing";
+import { useCountryGeo } from "@/lib/geo";
+import { useMapViewport } from "@/lib/viewport";
 import type { Board, Spot, FeedItem, BoardStats, OwnerTotal } from "@/lib/types";
 import AnimatedNumber from "./AnimatedNumber";
 import WorldMap from "./WorldMap";
+import GlobeMap from "./GlobeMap";
 import ListBoard from "./ListBoard";
 import SpotModal from "./SpotModal";
 import ActivityFeed from "./ActivityFeed";
 import WorldPowers from "./WorldPowers";
+import ViewToggle from "./ViewToggle";
+import ZoomControls from "./ZoomControls";
 
 interface Props {
   board: Board;
@@ -19,8 +24,6 @@ interface Props {
   initialStats: BoardStats;
   initialOwnerTotals: OwnerTotal[];
 }
-
-const fmtDollars = (cents: number) => formatMoney(cents, "usd");
 
 export default function BoardView({
   board,
@@ -46,6 +49,13 @@ export default function BoardView({
   const claimed = useMemo(() => spotList.filter((s) => s.owner_display).length, [spotList]);
 
   const presenceKey = useRef<string>(Math.random().toString(36).slice(2));
+
+  // Geography (shared between flat and globe — parsed once, cached).
+  const geoUrl = (board.config?.geographyUrl as string) || "/countries-110m.json";
+  const { features } = useCountryGeo(geoUrl);
+
+  // Viewport: viewMode, zoom, center, hover, flash — shared state for both renderers.
+  const viewport = useMapViewport();
 
   // Register the board visit (unique per session, dedupe is server-side).
   useEffect(() => {
@@ -87,7 +97,6 @@ export default function BoardView({
           const item = payload.new as FeedItem;
           setFeed((prev) => [item, ...prev].slice(0, 200));
           setPlundered((p) => p + (item.amount || 0));
-          // Increment per-owner lifetime plunder (mirrors server-side owner_totals upsert).
           if (item.actor) {
             setOwnerTotals((prev) => ({
               ...prev,
@@ -126,6 +135,8 @@ export default function BoardView({
   const openSpot = useCallback((id: string) => setSelectedId(id), []);
   const close = useCallback(() => setSelectedId(null), []);
 
+  const isMap = board.kind === "map";
+
   return (
     <>
       <div className="topbar">
@@ -134,6 +145,11 @@ export default function BoardView({
         </Link>
         <span className="sub board-name">/ {board.name}</span>
         <span className="spacer" />
+
+        {isMap && (
+          <ViewToggle viewMode={viewport.viewMode} onChange={viewport.setViewMode} />
+        )}
+
         <span className="stat online">
           <span className="v">
             <span className="dot" />
@@ -191,18 +207,43 @@ export default function BoardView({
         <section className="canvas">
           <div className="canvas-heading">
             <span className="eyebrow">Live territory</span>
-            <p>{board.kind === "map" ? "Drag to explore · Select a country to make your move" : "Every rank is open to challenge"}</p>
+            <p>{isMap ? "Drag to explore · Select a country to make your move" : "Every rank is open to challenge"}</p>
           </div>
           <div className="canvas-coordinates" aria-hidden="true">01° 20′ N &nbsp;·&nbsp; 10° 00′ E</div>
-          {board.kind === "map" ? (
-            <WorldMap
-              board={board}
-              spots={spots}
-              geographyUrl={
-                (board.config?.geographyUrl as string) || "/countries-110m.json"
-              }
-              onPick={openSpot}
-            />
+
+          {isMap ? (
+            <>
+              {viewport.viewMode === "globe" && features ? (
+                <GlobeMap
+                  board={board}
+                  spots={spots}
+                  features={features}
+                  zoomT={viewport.zoomT}
+                  center={viewport.center}
+                  flashKey={viewport.flashKey}
+                  onPick={openSpot}
+                  onZoomChange={viewport.setZoomT}
+                  onCenterChange={viewport.setCenter}
+                />
+              ) : (
+                <WorldMap
+                  board={board}
+                  spots={spots}
+                  geographyUrl={geoUrl}
+                  zoomT={viewport.zoomT}
+                  center={viewport.center}
+                  flashKey={viewport.flashKey}
+                  onPick={openSpot}
+                  onZoomChange={viewport.setZoomT}
+                  onCenterChange={viewport.setCenter}
+                />
+              )}
+              <ZoomControls
+                onZoomIn={viewport.zoomIn}
+                onZoomOut={viewport.zoomOut}
+                onReset={viewport.resetView}
+              />
+            </>
           ) : (
             <ListBoard spotList={spotList} board={board} onPick={openSpot} />
           )}
