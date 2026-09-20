@@ -16,14 +16,14 @@ declare global {
 }
 
 const COLOR_PALETTE = [
-  "#dff550", // lime (default owned)
-  "#ff7769", // red
-  "#50b4ff", // blue
-  "#f59e0b", // amber
-  "#a855f7", // purple
-  "#ec4899", // pink
-  "#14b8a6", // teal
-  "#ff6b35", // orange
+  "#bb4a3c", // terracotta (default owned)
+  "#c9963f", // brass
+  "#3f6f9e", // atlas blue
+  "#5f8c6e", // sage
+  "#8a4b6b", // plum
+  "#d0803e", // ochre orange
+  "#5b6b8a", // slate blue
+  "#8c3b3b", // deep red
 ];
 
 function roundToWholeDollar(cents: number): number {

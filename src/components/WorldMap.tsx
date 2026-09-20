@@ -19,9 +19,9 @@ interface Props {
   onCenterChange: (center: [number, number]) => void;
 }
 
-const LAND = "#19342c";
-const LAND_HOVER = "#305444";
-const DEFAULT_OWNED = "#dff550";
+const LAND = "#ccb78f";
+const LAND_HOVER = "#dcc9a3";
+const DEFAULT_OWNED = "#bb4a3c";
 
 function lightenHex(hex: string): string {
   try {
@@ -33,7 +33,7 @@ function lightenHex(hex: string): string {
     const lb = Math.min(255, b + Math.round((255 - b) * 0.25));
     return `#${lr.toString(16).padStart(2, "0")}${lg.toString(16).padStart(2, "0")}${lb.toString(16).padStart(2, "0")}`;
   } catch {
-    return "#f0ff91";
+    return "#cf5b4b";
   }
 }
 
@@ -112,7 +112,7 @@ export default function WorldMap({
                         spot && setHover({ x: e.clientX, y: e.clientY, spot })
                       }
                       onMouseLeave={() => { setHover(null); setHoveredGeoKey(null); }}
-                      style={{ fill, stroke: "#07110f", strokeWidth: 0.4, cursor: spot ? "pointer" : "default" }}
+                      style={{ fill, stroke: "#0a1826", strokeWidth: 0.5, cursor: spot ? "pointer" : "default" }}
                     />
                     {centroid && spot?.logo_url && (
                       <Marker coordinates={centroid as [number, number]}>
