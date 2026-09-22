@@ -1,49 +1,88 @@
-# Spot Game Engine
+# Claim Your Territory
 
-A reusable **"pay-to-hold, pay-1.5×-to-steal"** engine — the mechanic behind
-warmap.lol / outbid.lol / outrank.lol — with two skins from one codebase:
+**Guaranteed-visibility ad space** — a reusable "pay-to-hold, pay-1.5×-to-steal"
+placement engine, inspired by the outbid.lol / warmap.lol model. One engine,
+two skins from the same codebase:
 
-- **`/b/world`** — an interactive **world map**; every country is for sale.
-- **`/b/top`** — a **leaderboard** of ranked slots.
+- **`/b/world`** — an interactive **world map**; every country is a placement.
+- **`/b/top`** — a **ranked leaderboard** of numbered slots.
 
-Add more boards (either kind) without touching the engine. Built on
-**Next.js (App Router) · Supabase (Postgres + Realtime + Storage) · Stripe**.
+A founder, indie hacker, or brand pays for a spot (a country, or rank #1–50).
+Their **logo, name, link, and description** go live on it immediately, seen by
+everyone who visits the board. Add more boards (map or leaderboard) without
+touching the engine. Built on **Next.js (App Router) · Supabase (Postgres +
+Realtime + Storage) · Stripe / Dodo Payments**.
 
 ---
 
-## How the game works
+## The pitch: guaranteed visibility, not a black box
 
-- Every **spot** (a country, or a leaderboard rank) has a price. Unclaimed spots
-  cost their base price; held spots cost `ceil(1.5 × current price)`, rounded up
-  to the whole dollar.
-- You **claim** an empty spot or **conquer** a held one by paying. Your logo,
-  name, and link go on it.
-- The previous owner **gets nothing back**. Their spot is always for sale over
-  their head. That tension is the entire product.
-- A live **War Report** feed, a **World Powers** leaderboard, and vanity
-  counters (online, plundered, claimed) create the sense of an ongoing war.
+Google Ads, Product Hunt, and Meta Ads sell you a bid and an algorithm — you
+spend money and hope it converts into eyeballs. Nobody can tell you exactly
+where or whether you'll be seen.
+
+This sells the opposite: **certainty of position.** Pay $X, own rank #Y (or a
+named country), starting now. No auction you can't see, no impression
+estimate, no black box — just a spot with your name on it that stays yours
+until someone pays more for it.
+
+That mechanic creates its own marketing engine:
+
+- **A live scoreboard is a public theater.** Real-time rank flips, a ticking
+  revenue counter, and a visible "who owns what" feed make the board feel
+  alive and worth checking — every visit is a chance to see something change.
+- **Status is shareable.** Owning the #1 spot (or a big country) is a bragging
+  right. A one-click "share my rank" card turns every buyer into a promoter —
+  they post it, their audience clicks through, the board gets more valuable,
+  and the next buyer pays more. (Not built yet — see [Roadmap](#roadmap).)
+- **Upgrading should feel cheap, not like starting over.** A buyer who already
+  owns rank #5 shouldn't have to think of moving to #3 as a brand-new
+  purchase — see the note on partial-upgrade pricing in the roadmap.
+
+The one structural risk of this model: once the top spot gets expensive
+enough, new buyers get priced out and the board goes stale. The roadmap below
+has two counters for that — a daily-reset board and niche vertical boards —
+so there's always a cheap, relevant entry point.
+
+---
+
+## How placements work
+
+- Every **spot** (a country, or a leaderboard rank) has a price. An unclaimed
+  spot costs its base price; a held spot costs `ceil(1.5 × current price)`,
+  rounded up to the whole dollar.
+- A buyer **claims** an empty spot or **conquers** a held one by paying. Their
+  logo, name, link, and description go live on it — instantly, no review
+  queue, no ad approval process.
+- The previous occupant **gets nothing back**. Their placement is always for
+  sale over their head — that's what keeps the board dynamic instead of a
+  static, stale directory.
+- A live **activity feed**, an **owner leaderboard**, and vanity counters
+  (online visitors, dollars moved, spots claimed) make the board feel like a
+  live market instead of a spreadsheet.
 
 ---
 
 ## The part that matters: correctness under concurrency
 
-Two people can try to conquer the same spot, at the same price, in the same
-second. The engine guarantees **exactly one wins and only the winner is charged**:
+Two buyers can try to take the same spot, at the same price, in the same
+second. The engine guarantees **exactly one wins and only the winner is
+charged**:
 
-1. **`/api/checkout`** prices the spot **server-side** (never trusts the client),
-   records the spot's `version` + `current_price` at that instant in the
-   `ledger`, and opens a Stripe Checkout Session with **manual capture**
+1. **`/api/checkout`** prices the spot **server-side** (never trusts the
+   client), records the spot's `version` + `current_price` at that instant in
+   the `ledger`, and opens a Stripe Checkout Session with **manual capture**
    (authorize now, don't charge yet).
 2. The buyer authorizes payment. Money is **held, not taken**.
 3. **`/api/webhook`** receives `checkout.session.completed`, dedupes on the
-   event id, then calls the Postgres function **`finalize_conquest`**, which runs
-   one conditional update: *take the spot only if its `version` still matches the
-   value captured at checkout.*
+   event id, then calls the Postgres function **`finalize_conquest`**, which
+   runs one conditional update: *take the spot only if its `version` still
+   matches the value captured at checkout.*
 4. **Won** → capture the authorization, write the feed row, broadcast over
    Realtime. **Lost the race** → **cancel the authorization** (no charge, no
    refund), and the buyer is told they were beaten to it.
 
-Because the database is the only referee, the map can never be double-sold, and
+Because the database is the only referee, a spot can never be double-sold, and
 losers are never charged — no refund churn, no disputes from that path.
 
 ---
@@ -52,8 +91,10 @@ losers are never charged — no refund churn, no disputes from that path.
 
 - Node 18+ (built and tested on Node 22).
 - A **Supabase** project.
-- A **Stripe** account (test mode is fine to start).
-- (Recommended) an **OpenAI** API key for image moderation. See the security note.
+- A **Stripe** account (test mode is fine to start), or a **Dodo Payments**
+  account.
+- (Recommended) an **OpenAI** API key for image moderation. See the security
+  note.
 
 ---
 
@@ -184,13 +225,13 @@ This is a working engine, not a turnkey legal business. Three things are on you:
   provider configured it passes images through and logs a warning. **Never run a
   public board without a moderation provider wired in.** Swap in Hive or AWS
   Rekognition there if you prefer, and add a human review queue for edge cases.
-- **Stripe will scrutinize this.** Frame it honestly as a *non-refundable digital
-  novelty / ad placement* — not gambling, not an investment. Expect elevated
-  chargebacks from outbid users; keep your dispute rate low and talk to Stripe
-  before you scale. Have a backup processor in mind.
-- **Get a lawyer's read.** Terms of Service (no refunds, "entertainment"),
-  privacy policy, a DMCA/abuse contact, EU/UK cooling-off waiver at checkout,
-  gambling classification in your target markets, and an 18+ gate. Budget a few
+- **Stripe will scrutinize this.** Frame it honestly as *guaranteed digital ad
+  placement* — not gambling, not an investment. Expect elevated chargebacks
+  from outbid buyers; keep your dispute rate low and talk to Stripe before you
+  scale. Have a backup processor in mind.
+- **Get a lawyer's read.** Terms of Service (no refunds, "ad placement, not an
+  investment"), privacy policy, a DMCA/abuse contact, EU/UK cooling-off waiver
+  at checkout, and any ad-disclosure rules in your target markets. Budget a few
   hours of counsel *before* launch.
 
 None of the above is legal or financial advice.
@@ -230,7 +271,7 @@ src/components/
   WorldMap.tsx      react-simple-maps skin (logos, hover, pan/zoom)
   ListBoard.tsx     leaderboard skin
   SpotModal.tsx     claim/conquer form → checkout
-  ActivityFeed.tsx  War Report
+  ActivityFeed.tsx  live activity feed
   WorldPowers.tsx   owner leaderboard
 ```
 
@@ -239,7 +280,8 @@ src/components/
 Insert a row into `boards` (`kind` = `map` or `leaderboard`) and its `spots`
 (mirror the patterns in `scripts/seed.mjs`). A `map` board needs spot `key`s that
 match your geography's feature ids and a `config.geographyUrl`; a `leaderboard`
-board just needs `position`s. No engine code changes required.
+board just needs `position`s. No engine code changes required — this is how
+niche vertical boards (see Roadmap) get added.
 
 ## What's included vs. roadmap
 
@@ -247,6 +289,35 @@ board just needs `position`s. No engine code changes required.
 upload, live feed + leaderboard + presence, seed, RLS, idempotent webhooks,
 optional Turnstile bot wall.
 
-**Roadmap (not built):** the "conquer the world" whole-map buyout, "you've been
-conquered" emails, auto-generated share cards, a moderation review dashboard,
-and seasons/resets. See the architecture blueprint for where these slot in.
+### Roadmap
+
+Ideas for keeping the board dynamic and lowering the entry barrier as the top
+spots get expensive — not built yet, and good places for a first contribution
+(see [Contributing](#contributing)):
+
+- **Partial-upgrade pricing** — if a buyer already owns rank #5 and wants #3,
+  charge only the difference between what they already paid and the new
+  price, instead of the full new price. Lowers the friction to keep spending.
+- **`/today` timeboxed board** — a leaderboard that resets at midnight UTC,
+  keeping the entry price low ($5–$10) every morning for new buyers.
+- **Niche vertical boards** — dedicated boards per category (Dev Tools, AI
+  Tools, Indie Games, …) instead of one general leaderboard, so buyers reach
+  an audience that actually converts.
+- **"Share my rank" card** — an auto-generated, shareable image for X /
+  LinkedIn when someone claims a spot, so buyers become the marketing.
+- **"You've been outbid" emails**, a moderation review dashboard, and seasons
+  / resets for the map board.
+
+See the architecture blueprint / `LEARNING.md` for where these slot into the
+existing engine.
+
+---
+
+## Contributing
+
+Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) for how to
+set up the project, coding conventions, and how to submit a pull request.
+Issues labeled [`good first issue`](../../issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+are scoped to be self-contained and don't require deep familiarity with the
+concurrency/payment core; [`help wanted`](../../issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
+covers larger roadmap items above.
