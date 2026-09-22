@@ -10,8 +10,8 @@ import type { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 // react-globe.gl must not be SSR'd (it accesses window/WebGL).
 const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
 
-const LAND = "#19342c";
-const DEFAULT_OWNED = "#dff550";
+const LAND = "#ccb78f";
+const DEFAULT_OWNED = "#bb4a3c";
 
 interface Props {
   board: Board;
@@ -106,10 +106,10 @@ export default function GlobeMap({
       if (!spot) return "";
       const price = requiredPrice(spot, Number(board.multiplier));
       const action = spot.owner_display ? "conquer" : "claim";
-      return `<div style="padding:6px 10px;background:#10221dee;border:1px solid #27463c;border-radius:10px;font-size:13px;color:#eff4e9">
+      return `<div style="padding:6px 10px;background:#12263dee;border:1px solid #3f5c7e;border-radius:10px;font-size:13px;color:#ede4d1">
         <div style="font-weight:700">${spot.label}</div>
-        <div>${formatMoney(price, board.currency)} <span style="color:#6f8d7e">to ${action}</span></div>
-        ${spot.owner_display ? `<div style="color:#6f8d7e">held by ${spot.owner_display}</div>` : ""}
+        <div>${formatMoney(price, board.currency)} <span style="color:#aeb9c9">to ${action}</span></div>
+        ${spot.owner_display ? `<div style="color:#aeb9c9">held by ${spot.owner_display}</div>` : ""}
       </div>`;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,14 +132,14 @@ export default function GlobeMap({
       <Globe
         ref={globeRef}
         globeImageUrl=""
-        backgroundColor="#0a0f0a"
+        backgroundColor="#0a1826"
         showAtmosphere={true}
-        atmosphereColor="#a8ff3a"
+        atmosphereColor="#c9963f"
         atmosphereAltitude={0.15}
         polygonsData={features.features}
         polygonCapColor={polygonCapColor}
         polygonSideColor={() => "rgba(0,0,0,0.15)"}
-        polygonStrokeColor={() => "#0a0f0a"}
+        polygonStrokeColor={() => "#0a1826"}
         polygonAltitude={0.01}
         polygonLabel={polygonLabel}
         onPolygonClick={onPolygonClick}

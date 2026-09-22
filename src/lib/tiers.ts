@@ -29,11 +29,11 @@ export function tierForKey(key: string): Tier {
   return tierFor(population[key] ?? 500_000);
 }
 
-/** Tier colors for badges — matches the dark/lime theme. */
+/** Tier colors for badges — matches the vintage-atlas theme. */
 export const TIER_COLORS: Record<Tier, string> = {
-  S: "#ff7769",
-  A: "#f59e0b",
-  B: "#50b4ff",
-  C: "#7bf0a8",
-  D: "#6f8d7e",
+  S: "#bb4a3c", // terracotta
+  A: "#c9963f", // brass
+  B: "#3f6f9e", // atlas blue
+  C: "#5f8c6e", // sage
+  D: "#8a97a8", // faint slate
 };
