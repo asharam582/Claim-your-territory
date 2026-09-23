@@ -17,7 +17,6 @@ export default function AnimatedNumber({
   format?: (n: number) => string;
   className?: string;
 }) {
-  const ref = useRef<HTMLSpanElement>(null);
   const prevRef = useRef(value);
   const [display, setDisplay] = useState(() => (format ? format(value) : String(value)));
 
@@ -42,7 +41,7 @@ export default function AnimatedNumber({
   }, [value, format]);
 
   return (
-    <span ref={ref} className={className}>
+    <span className={className}>
       {display}
     </span>
   );

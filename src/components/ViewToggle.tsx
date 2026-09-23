@@ -15,6 +15,7 @@ export default function ViewToggle({
         type="button"
         className={`vt-btn${viewMode === "flat" ? " active" : ""}`}
         onClick={() => onChange("flat")}
+        aria-pressed={viewMode === "flat"}
       >
         ▦ FLAT
       </button>
@@ -22,6 +23,7 @@ export default function ViewToggle({
         type="button"
         className={`vt-btn${viewMode === "globe" ? " active" : ""}`}
         onClick={() => onChange("globe")}
+        aria-pressed={viewMode === "globe"}
       >
         ◉ GLOBE
       </button>

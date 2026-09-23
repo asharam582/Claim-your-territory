@@ -42,11 +42,6 @@ export default function GlobeMap({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const globeRef = useRef<any>(null);
   const hasInteracted = useRef(false);
-  const [hover, setHover] = useState<{
-    x: number;
-    y: number;
-    spot: Spot;
-  } | null>(null);
 
   // Auto-rotate until first user interaction.
   useEffect(() => {
@@ -119,7 +114,6 @@ export default function GlobeMap({
   return (
     <div
       className="globe-wrap"
-      onMouseLeave={() => setHover(null)}
       onPointerDown={onInteract}
       onWheel={(e) => {
         e.stopPropagation();
