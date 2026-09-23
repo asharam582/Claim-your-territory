@@ -37,7 +37,6 @@ function FeedRow({
   items: FeedItem[];
   currency: string;
   seenIds: Set<string>;
-  ariaAttributes?: Record<string, unknown>;
 }) {
   const f = items[index];
   if (!f) return null;

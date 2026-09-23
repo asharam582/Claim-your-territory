@@ -32,7 +32,6 @@ function PowerRow({
 }: {
   index: number;
   style?: React.CSSProperties;
-  ariaAttributes?: Record<string, unknown>;
 } & PowerRowProps) {
   const p = powers[index];
   if (!p) return null;
