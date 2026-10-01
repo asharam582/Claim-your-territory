@@ -209,6 +209,9 @@ h3 {
   border-right: 1px solid var(--border);
   background: #0a1826d4;
 }
+.side > * {
+  flex-shrink: 0;
+}
 /* Parchment "field orders" card — a paper note pinned to the map */
 .mission-card {
   padding: 16px;
